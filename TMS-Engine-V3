@@ -1,3 +1,5 @@
+#With added modules for AV processing + imagination...
+
 # Constants
 SAMPLE_RATE = 22050
 DURATION = 1.0  # Shorter for simplicity
