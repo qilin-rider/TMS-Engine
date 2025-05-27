@@ -103,6 +103,31 @@ class EvolutionOfSchema:
             return current_category
 
 class SensoryProcessor:
+
+
+    def preprocess_audio(self, audio):
+        """
+        Apply FFT to raw audio data to transform it into the frequency domain.
+        
+        Args:
+            audio (numpy.ndarray): Raw audio data (time-domain samples).
+        
+        Returns:
+            torch.Tensor: Frequency-domain magnitude spectrum.
+        """
+        try:
+            # Ensure audio is a NumPy array
+            audio = np.asarray(audio)
+            # Apply FFT and take the magnitude spectrum (first half only)
+            spectrum = np.abs(np.fft.fft(audio))[:len(audio)//2]
+            # Convert to PyTorch tensor for consistency with the rest of your code
+            return torch.tensor(spectrum, dtype=torch.float32)
+        except Exception as e:
+            logging.error(f"Error in audio preprocessing: {e}")
+            return torch.zeros(len(audio)//2, dtype=torch.float32)
+
+
+
     def __init__(self, num_senses=NUM_SENSES, image_size=IMAGE_SIZE, sample_rate=SAMPLE_RATE):
         self.num_senses = num_senses
         self.image_size = image_size
